@@ -1,32 +1,40 @@
-# Voice Typing
+# Voice Typer
 
-A Python application that enables voice-to-text functionality using the Whisper.cpp model. This application allows you to record audio using a hotkey and automatically transcribes it to text, which is then pasted at your cursor position.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+A lightweight, open-source voice typing application that converts speech to text using local inference with Whisper models. Record and transcribe audio with a simple keyboard shortcut for seamless integration with any application.
 
 ## Features
 
-- **Hotkey-Based Recording**: Start and stop recording with a customizable keyboard shortcut
-- **Real-Time Audio Processing**: Records audio in real-time with automatic normalization
-- **Fast Transcription**: Uses Whisper.cpp for efficient speech-to-text conversion
-- **Automatic Paste**: Automatically pastes transcribed text at your cursor position
-
-## Requirements
-
-- Python 3.x
-- Required Python packages (install via `pip install -r requirements.txt`):
-  - pywhispercpp (Whisper.cpp Python bindings)
-  - sounddevice (for audio recording)
-  - pynput (for keyboard control)
-  - pyperclip (for clipboard operations)
-  - numpy (for audio processing)
+- **Keyboard-Driven**: Toggle recording with a configurable hotkey (default: `Cmd+Alt`)
+- **Local Inference**: Uses [whisper.cpp](https://github.com/ggerganov/whisper.cpp) via the PyWhisperCPP wrapper for offline, private speech recognition
+- **Universal Compatibility**: Works with any application that accepts pasted text
+- **Simple Interface**: No GUI required - just press the hotkey, speak, and release to insert text
+- **Customizable**: Configure your preferred language model and hotkey
 
 ## Installation
 
+### Prerequisites
+
+- Python 3.8 or higher
+- A working microphone
+- Linux, macOS, or Windows
+
+### Setup
+
 1. Clone this repository:
    ```bash
-   git clone git@github.com:lladdy/voice-typing.git
+   git clone https://github.com/lladdy/voice-typing.git
+   cd voice-typing
    ```
 
-2. Install the required dependencies:
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. Install the required dependencies:
    ```bash
    pip install -r requirements.txt
    ```
@@ -38,30 +46,53 @@ A Python application that enables voice-to-text functionality using the Whisper.
    python run.py
    ```
 
-2. The default configuration uses Command+Alt (⌘+⌥) as the recording hotkey and the 'base.en' Whisper model. You can modify these settings in `run.py`:
-   ```python
-   config = VoiceTyperConfig(recording_hotkey="<cmd>+<alt>",
-                            model_name="base.en")
-   ```
+2. Press and hold your configured hotkey (default: `Cmd+Alt`) to start recording.
+3. Speak clearly into your microphone.
+4. Release the hotkey to stop recording and transcribe.
+5. The text will be automatically pasted at your cursor position.
 
-3. To use:
-   - Press the configured hotkey to start recording
-   - Speak your text
-   - Press the hotkey again to stop recording
-   - The transcribed text will automatically be pasted at your cursor position
+## Configuration
+
+You can customize the application by modifying the `VoiceTyperConfig` in `run.py`:
+
+```python
+config = VoiceTyperConfig(
+    recording_hotkey="<cmd>+<alt>",  # Change to your preferred hotkey
+    model_name="base.en"             # Change to use different Whisper models
+)
+```
+
+Available model options:
+- `tiny.en`: Fastest but less accurate (English only)
+- `base.en`: Good balance of speed and accuracy (English only)
+- `small.en`: More accurate but slower (English only)
+- `medium.en`: Most accurate but requires more resources (English only)
+- `tiny`, `base`, `small`, `medium`: Multilingual versions
 
 ## Project Structure
 
-- `run.py`: Main entry point of the application
-- `voice_typer.py`: Core application logic and coordination between components
-- `audio.py`: Handles audio recording functionality using sounddevice
-- `keyboard.py`: Manages keyboard interactions and hotkey detection
-- `speech_to_text.py`: Wrapper for the Whisper.cpp model and transcription
+- `run.py`: Entry point for the application
+- `voice_typer.py`: Core application logic
+- `audio.py`: Audio recording and processing
+- `speech_to_text.py`: Speech recognition using Whisper.cpp
+- `keyboard.py`: Keyboard interaction and hotkey handling
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- [Whisper](https://github.com/openai/whisper) by OpenAI
+- [whisper.cpp](https://github.com/ggerganov/whisper.cpp) for efficient local inference
+- [PyWhisperCPP](https://github.com/aarnphm/pywhispercpp) for Python bindings to whisper.cpp
