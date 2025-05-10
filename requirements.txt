@@ -1,0 +1,17 @@
+certifi==2025.4.26
+cffi==1.17.1
+charset-normalizer==3.4.2
+evdev==1.9.2
+idna==3.10
+numpy==2.2.3
+platformdirs==4.3.8
+pycparser==2.22
+pynput==1.7.7
+pyperclip==1.9.0
+python-xlib==0.33
+pywhispercpp @ git+https://github.com/absadiki/pywhispercpp.git@e4ae10b782b58b5fe0c692576285a43beada3686
+requests==2.32.3
+six==1.17.0
+sounddevice==0.5.1
+tqdm==4.67.1
+urllib3==2.4.0
