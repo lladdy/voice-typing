@@ -23,7 +23,7 @@ A Python application that enables voice-to-text functionality using the Whisper.
 
 1. Clone this repository:
    ```bash
-   git clone [repository-url]
+   git clone git@github.com:lladdy/voice-typing.git
    ```
 
 2. Install the required dependencies:
