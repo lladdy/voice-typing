@@ -27,10 +27,15 @@ class Keyboard:
         """Copies text to clipboard."""
         pyperclip.copy(text)
     
+    def _wrapped_hotkey_callback(self):
+        """Wrapper around the hotkey callback with logging."""
+        logger.info(f"Hotkey {self.hotkey} pressed")
+        self.hotkey_callback()
+    
     def start_listener(self):
         """Start listening for the configured hotkey."""
         try:
-            self.hotkey_listener = keyboard.GlobalHotKeys({self.hotkey: self.hotkey_callback})
+            self.hotkey_listener = keyboard.GlobalHotKeys({self.hotkey: self._wrapped_hotkey_callback})
             self.hotkey_listener.start()
             return self.hotkey_listener
         except Exception as error:

@@ -25,6 +25,7 @@ class VoiceTyper:
     """
 
     def __init__(self, config: VoiceTyperConfig):
+        self.config = config
         self.speech_to_text_model = SpeechToTextModel(config.model_name)
         self.audio_manager = AudioManager()
         self.keyboard = Keyboard(config.recording_hotkey, self._handle_hotkey_action)
@@ -42,7 +43,8 @@ class VoiceTyper:
             logger.info("Beginning transcription...")
             transcription_segments = self.speech_to_text_model.transcribe(audio_chunks)
             transcription_text = " ".join(segment.text for segment in transcription_segments)
-            logger.info(transcription_text)
+            logger.info("Transcription completed.")
+            logger.info(f"Transcription text: {transcription_text}")
 
             self.keyboard.copy_to_clipboard(transcription_text)
             self.keyboard.simulate_paste_action()
@@ -84,6 +86,7 @@ class VoiceTyper:
         try:
             listener = self.keyboard.start_listener()
             if listener:
+                logger.info(f"VoiceTyper is running. Press the hotkey {self.config.recording_hotkey} to start/stop recording.")
                 listener.join()
         except Exception as error:
             logger.info(f"Error in the voice typer: {str(error)}")
